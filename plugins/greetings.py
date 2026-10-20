@@ -7,7 +7,8 @@ from pyrogram.enums import ChatMemberStatus as CMS
 from pyrogram.errors import ChatAdminRequired, RPCError
 from pyrogram.types import ChatMemberUpdated, Message
 
-from BADMUSIC.logging import LOGGERR
+
+from BADMUSIC.logging import LOGGERR as LOGGER
 from BADMUSIC import app
 from BADMUSIC.utils.decorators import AdminRightsCheck
 from BADMUSIC.utils.permissions import adminsOnly
