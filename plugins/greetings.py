@@ -39,9 +39,20 @@ async def escape_mentions_using_curly_brackets_wl(
 ) -> str:
     teks = await escape_invalid_curly_brackets(text, parse_words)
     if n:
-        user = m.new_chat_member.user if m.new_chat_member else m.from_user
-    else:
-        user = m.old_chat_member.user if m.old_chat_member else m.from_user
+    user = (
+        m.new_chat_member.user
+        if m.new_chat_member
+        else None
+    ) or m.from_user
+else:
+    user = (
+        m.old_chat_member.user
+        if m.old_chat_member
+        else None
+    ) or m.from_user
+
+if user is None:
+    return ""
     if teks:
         teks = teks.format(
             first=escape(user.first_name),
@@ -373,7 +384,14 @@ async def member_has_left(c: app, member: ChatMemberUpdated):
         "chatname",
     ]
 
-    user = member.old_chat_member.user if member.old_chat_member else member.from_user
+    user = (
+      member.old_chat_member.user
+      if member.old_chat_member
+      else None
+    ) or member.from_user
+  
+if user is None:
+  return
 
     hmm = await escape_mentions_using_curly_brackets_wl(member, False, oo, parse_words)
     if status:
